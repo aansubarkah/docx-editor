@@ -3,3 +3,26 @@
 
 .vincent/
 .claude/
+
+./frontend/node_modules/
+
+# Environment variables
+.env
+backend/.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+backend/.venv/
+backend/venv/
+
+# Storage
+storage/
+
+# Node
+node_modules/
+frontend/dist/
+frontend/node_modules/
