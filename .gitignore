@@ -1,2 +1,5 @@
 *.docx
 *.xlsx
+
+.vincent/
+.claude/
