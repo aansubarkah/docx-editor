@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+  xsi:type="TaskPaneApp">
+  <Id>85f6e6f9-83b2-4a80-9e5c-6e7f1d4a0c41</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>Docx Agent</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="Docx Agent (Sideload)" />
+  <Description DefaultValue="Create/edit Word docs with an LLM, client-side." />
+  <IconUrl DefaultValue="https://localhost:5173/icon-32.png" />
+  <SupportUrl DefaultValue="https://localhost:5173/" />
+  <AppDomains>
+    <AppDomain>https://localhost:5173</AppDomain>
+  </AppDomains>
+  <Hosts><Host Name="Document" /></Hosts>
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://localhost:5173/index.html" />
+  </DefaultSettings>
+  <Permissions>ReadWriteDocument</Permissions>
+  <VersionOverrides xsi:type="ov:VersionOverrides" Version="1.0">
+    <ov:Hosts>
+      <ov:Host xsi:type="ov:Document">
+        <ov:DesktopFormFactor>
+          <ov:GetStarted>
+            <ov:Title resid="residGetStartedTitle" />
+            <ov:Description resid="residGetStartedDescription" />
+            <ov:LearnMoreUrl resid="residGetStartedLearnMoreUrl" />
+          </ov:GetStarted>
+          <ov:ExtensionPoint xsi:type="ov:PrimaryCommandSurface">
+            <ov:OfficeTab id="TabHome">
+              <ov:Group id="docxAgentGroup" label="Docx Agent">
+                <ov:Control xsi:type="ov:Button" id="btnShowTaskPane">
+                  <ov:Label resid="residShowTaskpaneButtonLabel" />
+                  <ov:Supertip>
+                    <ov:Title resid="residShowTaskpaneButtonLabel" />
+                    <ov:Description resid="residShowTaskpaneButtonDesc" />
+                  </ov:Supertip>
+                  <ov:Icon>
+                    <ov:IconSize xsi:type="ov:Ribbon32x32">
+                      <ov:Image resid="icon32" />
+                    </ov:IconSize>
+                  </ov:Icon>
+                  <ov:Action xsi:type="ov:ShowTaskpane">
+                    <ov:TaskpaneId>ButtonId1</ov:TaskpaneId>
+                    <ov:SourceLocation resid="residTaskPaneUrl" />
+                  </ov:Action>
+                </ov:Control>
+              </ov:Group>
+            </ov:OfficeTab>
+          </ov:ExtensionPoint>
+        </ov:DesktopFormFactor>
+      </ov:Host>
+    </ov:Hosts>
+    <ov:Resources>
+      <ov:Images>
+        <ov:Image id="icon32" DefaultValue="https://localhost:5173/icon-32.png" />
+      </ov:Images>
+      <ov:Urls>
+        <ov:Url id="residTaskPaneUrl" DefaultValue="https://localhost:5173/index.html" />
+        <ov:Url id="residGetStartedLearnMoreUrl" DefaultValue="https://localhost:5173/" />
+      </ov:Urls>
+      <ov:ShortStrings>
+        <ov:String id="residGetStartedTitle" DefaultValue="Docx Agent is installed" />
+        <ov:String id="residShowTaskpaneButtonLabel" DefaultValue="Docx Agent" />
+      </ov:ShortStrings>
+      <ov:LongStrings>
+        <ov:String id="residGetStartedDescription" DefaultValue="Open the task pane to work with the LLM on this document." />
+        <ov:String id="residShowTaskpaneButtonDesc" DefaultValue="Open the Docx Agent task pane" />
+      </ov:LongStrings>
+    </ov:Resources>
+  </VersionOverrides>
+</OfficeApp>

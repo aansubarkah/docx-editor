@@ -160,7 +160,35 @@ async def plan_ops(req: PlanOpsRequest):
             except Exception:
                 pass
 
-        system = "You are a careful docx editor. Return only operations via the tool. Use after_paragraph_id anchors when inserting."
+        system = """You are a careful docx editor. Return only operations via the tool. Use after_paragraph_id anchors when inserting.
+
+IMPORTANT for converting content to tables:
+
+A) Paragraph to table conversion:
+1. Use insert_table with after_paragraph_id to place table AFTER the paragraph
+2. Use remove_paragraph with after_paragraph_id to remove the original paragraph
+
+B) Numbered/bulleted list to table conversion:
+1. Identify ALL list items to convert (they will have sequential paragraph_ids)
+2. Use insert_table with after_paragraph_id set to the LAST list item's ID
+3. Use multiple remove_paragraph operations to remove EACH list item by its paragraph_id
+4. Parse list content intelligently:
+   - For "Name: Value" format → 2 columns
+   - For simple lists → 1 column
+   - Extract data from list markers (1., 2., 3., •, etc.)
+
+C) Converting ranges:
+- Always insert the table AFTER the last item to be converted
+- Remove all items being converted using their individual paragraph_ids
+- This ensures correct positioning
+
+Example for "convert these 3 numbered items to a table":
+[
+  {"type": "insert_table", "after_paragraph_id": "p-item3", "rows": 3, "cols": 2, "data": [...]},
+  {"type": "remove_paragraph", "after_paragraph_id": "p-item1"},
+  {"type": "remove_paragraph", "after_paragraph_id": "p-item2"},
+  {"type": "remove_paragraph", "after_paragraph_id": "p-item3"}
+]"""
         user_msg = "Instruction: " + instruction + "\nOutline: " + json.dumps(outline_json)
 
         operations = None

@@ -227,6 +227,16 @@ def apply_operations(file_id: str, operations: List[Operation]) -> Tuple[str, Li
             from docx.oxml import parse_xml
             from docx.oxml.ns import nsdecls
 
+            # Find insertion position if after_paragraph_id is specified
+            insert_after_element = None
+            if op.after_paragraph_id:
+                for i, p in enumerate(doc.paragraphs):
+                    lvl = _heading_level(p)
+                    pid = stable_paragraph_id(p.text, i, lvl)
+                    if pid == op.after_paragraph_id:
+                        insert_after_element = p._element
+                        break
+
             table = doc.add_table(rows=rows, cols=cols)
 
             # Try to apply table style if available
@@ -270,6 +280,16 @@ def apply_operations(file_id: str, operations: List[Operation]) -> Tuple[str, Li
                     for paragraph in cell.paragraphs:
                         for run in paragraph.runs:
                             run.font.bold = True
+
+            # Move table to correct position if specified
+            if insert_after_element is not None:
+                tbl_element = table._element
+                parent = insert_after_element.getparent()
+                # Find the index of the paragraph to insert after
+                index = list(parent).index(insert_after_element)
+                # Move table to position after the paragraph
+                parent.remove(tbl_element)
+                parent.insert(index + 1, tbl_element)
 
         elif op.type == "edit_table":
             # Edit existing table
